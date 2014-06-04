@@ -1,0 +1,7 @@
+.ui-friend-li {
+	list-style-image : url('./favicon.png');
+	margin	: 0px;
+}
+.ui-friend-li li {
+	cursor	: pointer;
+}

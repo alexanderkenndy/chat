@@ -6,6 +6,7 @@
     <meta name="language" content="en" />
     <title>Layout with Accordion</title>
     <link rel="stylesheet" type="text/css" href="./lib/css/layout-default-latest.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/css/chat.css" />
     <link rel="stylesheet" type="text/css" href="./lib/css/themes/base/jquery.ui.all.css" />
     <!-- CUSTOMIZE/OVERRIDE THE DEFAULT CSS -->
     <style type="text/css">
@@ -98,32 +99,6 @@
     <div class="ui-layout-center" style="display: none;">
         <h3 class="ui-widget-header">Chatting Pane</h3>
         <div class="ui-layout-content ui-widget-content">
-            <h2>Accordion Resizing Callbacks</h2>
-            <ul>
-                <li><a href="./lib/js/jquery.layout.resizePaneAccordions-latest.js">Accordion Resizing Callback</a>
-                </li>
-
-                <li><a href="./lib/js/jquery.layout.resizePaneAccordions-latest.min.js">Accordion Resizing Callback &ndash; Minified</a>
-                </li>
-            </ul>
-            <h5>Javascript used to create this page</h5>
-            <pre><code>
-				$('body').layout({
-					west__size:      300,   
-					east__size:      300 <i>// RESIZE Accordion widget when panes resize</i> ,  
-					west__onresize:  $.layout.callbacks.resizePaneAccordions , 
-					east__onresize:  $.layout.callbacks.resizePaneAccordions
-				});
-			<i>// ACCORDION - in the West pane</i>
-				$("#accordion1").accordion({ heightStyle: "fill" });
-			<i>// ACCORDION - in the East pane - in a 'content-div'</i>
-
-				$("#accordion2").accordion({
-					heightStyle	: "fill" ,  
-					active		:1 <i>// set active accordion-panel</i>
-
-				});
-			</code></pre>
         </div>
     </div>
     <div class="ui-layout-west" style="display: none;">
@@ -165,8 +140,12 @@
             <div id="accordion2" class="basic">
                 <h3><a href="#">Friends</a></h3>
                 <div>
-                    <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc.</p>
-                    <p>Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+					<ul class="ui-friend-li">
+						<li>Lucy</li>
+						<li>Lily</li>
+						<li>Tom</li>
+						<li>Han Meimei</li>
+					</ul>
                 </div>
                 <h3><a href="#">Groups</a></h3>
                 <div>
