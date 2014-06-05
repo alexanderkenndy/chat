@@ -71,6 +71,14 @@
                 //active: 1
 				collapsible: true
             });
+			$(".chat-ui-sendmsg-btn").button().click(function(event){
+				//TODO message resolve and add client's pc time
+				//below is sample code
+				var content = $(".chat-ui-content-input").val();
+				var origin = $(".chat-ui-content-rec").html();
+				$(".chat-ui-content-rec").html(origin + content + "\n");
+				$(".chat-ui-content-input").val("");
+			});
             // THEME SWITCHER
             addThemeSwitcher('.ui-layout-north', {
                 top: '12px',
@@ -93,12 +101,18 @@
 
             <button onClick="removeUITheme(); myLayout.resizeAll()">Remove Theme</button>
         </div>
-        North Pane
+		Welcome to global biggest chatting room,enjoy chatting!
     </div>
     <div class="ui-layout-south ui-widget-content ui-state-error" style="display: none; text-align:center;">Copy Right 2014 All Rights Reserved</div>
     <div class="ui-layout-center" style="display: none;">
         <h3 class="ui-widget-header">Chatting Pane</h3>
-        <div class="ui-layout-content ui-widget-content">
+        <div class="ui-layout-content ui-widget-content chat-ui-content">
+			<div class="chat-ui-content-rec"></div>
+			<h3 class="ui-widget-header">Toolbar Pane</h3>
+			<div class="chat-ui-content-send">
+				<textarea class="chat-ui-content-input"></textarea>	
+				<input type="submit" value="Send" class="chat-ui-sendmsg-btn">
+			</div>
         </div>
     </div>
     <div class="ui-layout-west" style="display: none;">

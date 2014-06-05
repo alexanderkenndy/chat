@@ -5,3 +5,36 @@
 .ui-friend-li li {
 	cursor	: pointer;
 }
+
+.chat-ui-content {
+	padding	: 0px;
+
+}
+
+.chat-ui-content-rec {
+	width	: 100%;
+	height	: 500px;
+}
+
+.chat-ui-content-send {
+	position	: absolute;
+	width		: 100%;
+	top	: 537px;
+	bottom		: 0px;
+}
+
+.chat-ui-content-input {
+	position	: absolute;
+	margin		: 0px;
+	padding		: 0px;
+	width		: 100%;
+	bottom		: 40px;
+	border		: none;
+	top			: 0px;
+}
+
+.chat-ui-sendmsg-btn {
+	position	: absolute!important;
+	bottom		: 0px;
+	right		: 0px;
+}
