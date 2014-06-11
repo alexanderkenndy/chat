@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./lib/css/chat.css" />
     <link rel="stylesheet" type="text/css" href="./lib/css/themes/base/jquery.ui.all.css" />
     <!-- REQUIRED scripts for layout widget -->
+    <script type="text/javascript" src="./lib/js/require.js"></script>
     <script type="text/javascript" src="./lib/js/jquery-latest.js"></script>
     <script type="text/javascript" src="./lib/js/jquery-ui-latest.js"></script>
     <script type="text/javascript" src="./lib/js/jquery.layout-latest.js"></script>
@@ -16,65 +17,13 @@
     <!-- compressed: ./lib/js/jquery.layout.resizePaneAccordions-latest.min.js -->
     <script type="text/javascript" src="./lib/js/themeswitchertool.js"></script>
     <script type="text/javascript" src="./lib/js/debug.js"></script>
+    <script type="text/javascript" src="./lib/js/chat.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<style	type="text/css">
 		.message {
 			color	: green;
 		}
 	</style>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            myLayout = $('body').layout({
-                west__size: 300,
-                east__size: 300, // RESIZE Accordion widget when panes resize 
-                west__onresize: $.layout.callbacks.resizePaneAccordions,
-                east__onresize: $.layout.callbacks.resizePaneAccordions
-            });
-            // ACCORDION - in the West pane
-            $("#accordion1").accordion({
-                //heightStyle: "fill"
-				collapsible: true
-            });
-            // ACCORDION - in the East pane - in a 'content-div'
-            $("#accordion2").accordion({
-                //heightStyle: "fill",
-                //active: 1
-				collapsible: true
-            });
-			//add fake message
-			$(".chat-ui-sendmsg-btn").button().click(function(event){
-				//TODO message resolve and add client's pc time
-				//below is sample code
-				var title = $("<div class='message'></div>");
-				var userName = "Tracy";
-				var user = $("<span>" + userName + "</span>");
-				var mDate = $("<span>" + new Date() + "</span>");
-				title.append(user);
-				title.append(mDate);
-
-				var div = $("<div></div>");
-				var contentContainer = $("<div></div>");
-				var content = $(".chat-ui-content-input").val();
-				contentContainer.text(content);
-				div.append(title);
-				div.append(contentContainer);
-				//var origin = $(".chat-ui-content-rec").html();
-				$(".chat-ui-content-rec").append(div);
-				$(".chat-ui-content-input").val("");
-			});
-            // THEME SWITCHER
-            addThemeSwitcher('.ui-layout-north', {
-                top: '12px',
-                right: '5px'
-            });
-            // if a new theme is applied, it could change the height of some content,
-
-            // so call resizeAll to 'correct' any header/footer heights affected
-
-            // NOTE: this is only necessary because we are changing CSS *AFTER LOADING* using themeSwitcher
-
-            setTimeout(myLayout.resizeAll, 1000); /* allow time for browser to re-render with new theme */
-        });
-    </script>
 </head>
 <body>
     <div class="ui-layout-north ui-widget-content" style="display: none;">

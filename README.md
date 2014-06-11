@@ -3,6 +3,9 @@ chat
 
 a simple chatting room via latest socket.io(1.0.2)
 
+Getting Start
+npm install
+npm start
 sio & ioc 0.9.* VS pre4
 ====
 ## pre2 -> pre4

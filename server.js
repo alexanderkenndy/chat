@@ -4,51 +4,75 @@
  * Copyright (C) 2014 guanglin.an (lucky315.an@gmail.com)
  */
 
-"use strict";
+'use strict';
 
 var express = require('express');
-var debug = require('debug')('chat:server');
-var config = require('./config');
-var port = config.dev.port;
-
+var http = require('http');
 var jsmask = require('json-mask');
+var redis = require('redis');
+var path = require('path');
+var redisAdapter = require('socket.io-redis'); 
+//var logger = require('./server/util/log.js');
+
+var debug = require('debug')('chat:server');
+
+var config = require('./config');
 
 var app = exports.app = express();
-var http = require('http');
-var httpServer = exports.httpServer = http.createServer(app);
+var server = exports.httpServer = http.createServer(app);
+var io = exports.io = require('socket.io')(server);
 
-var redis = require('redis');
-var redisAdapter = require('socket.io-redis'); 
-
-var io = exports.io = 
-  require('socket.io')(
-    httpServer, 
-    { 
-      key : 'wkrldi',
-      transports : ['websocket'],
-      adapter: redisAdapter(
-        {
-          host : 'localhost',
-          port : 6379
-        })
-    });
+//TODO remove the redis for debug
+//var io = exports.io = 
+//  require('socket.io')(
+//    server, 
+//    { 
+//      key : 'wkrldi',
+//      transports : ['websocket'],
+//      adapter: redisAdapter(
+//        {
+//          host : 'localhost',
+//          port : 6379
+//        })
+//    });
 
 //global consts
+
+app.set('view engine','ejs');
+app.set('views',__dirname + '/views/');
+app.set('port',process.env.PORT || config.dev.port);
+app.use(express.static(__dirname + '/public'));
+app.use(express.favicon('./favicon.png'));
+app.use(express.logger());
+app.use(express.methodOverride());
+app.use(express.cookieParser('alexander'));
+app.use(express.cookieSession());
+app.use(express.bodyParser());
+
+app.use(express.static(path.join(__dirname + '/public')));
+app.use(express.static(path.join(__dirname + '/assets')));
+app.use(express.static(path.join(__dirname + '/thirdparty')));
+
 var myroom = 'baywalk';
 var users = exports.users = {};
 var nUsers = exports.nUsers = 0;
 
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', function(req, res){
-  res.send('Hello World');
+app.get('/',function(req,res){
+	res.render('index',{});
 });
 
 if (process.env.NODE_ENV !== 'test') {
-  httpServer.listen(port, function(){
-    process.send('Chatting server is listening port on ' + port);
-  });
+	server.listen(app.get('port'), function(){
+		process.send('Chatting server is listening port on ' + app.get('port'));
+	});
 }
+
+process.on('uncaughtException', function(err) {
+	debug(err);
+	debug(err.stack);
+	throw err;
+});
+
 
 io.use(function(socket, next){
   var socket_req_field = 'headers(host),url,method,_query';
@@ -139,12 +163,6 @@ io.on('error', function(err){
   debug('[socket.io][error] ', err);
 });
 
-process.on('uncaughtException', function(err) {
-  debug(err);
-  debug(err.stack);
-
-  throw err;
-});
 
 function broadcast_namespace(data, ns){
   if (ns) {
