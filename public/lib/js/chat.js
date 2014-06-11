@@ -5,7 +5,6 @@ $(document).ready(function(){
         west__onresize: $.layout.callbacks.resizePaneAccordions,
         east__onresize: $.layout.callbacks.resizePaneAccordions
     });
-	var socket = io();
     // ACCORDION - in the West pane
     $("#accordion1").accordion({
         //heightStyle: "fill"
@@ -17,17 +16,20 @@ $(document).ready(function(){
         //active: 1
 		collapsible: true
     });
-	//add fake message
-	$(".chat-ui-sendmsg-btn").button().click(function(event){
-		var content = $(".chat-ui-content-input").val();
-		socket.emit('broadcast room',content);
-		sendMsg('Tracy',content);
-		$(".chat-ui-content-input").val('');
-	});
-	socket.on('new message',function(msg){
-		sendMsg('Tom',msg);
-	});
+	require(['socket.io/socket.io'],function(socket){
+		$(".chat-ui-sendmsg-btn").button().click(function(event){
+			var content = $(".chat-ui-content-input").val();
+			socket.emit('broadcast room',content);
+			sendMsg('Tracy',content);
+			$(".chat-ui-content-input").val('');
+		});
+		socket.on('new message',function(msg){
+			sendMsg('Tom',msg);
+		});
 
+	});
+	//add fake message
+	
         // THEME SWITCHER
     addThemeSwitcher('.ui-layout-north', {
         top: '12px',
